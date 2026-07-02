@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Niyesh Koirala — Frontend Developer</title>
+<meta name="description" content="Portfolio of Niyesh Koirala — frontend developer building responsive, accessible interfaces with React, Node and real data. Available for internship.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%230a0c10'/><text x='50' y='68' font-size='52' text-anchor='middle' fill='%235cf2a2' font-family='monospace'>&gt;_</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>
+:root{
+  --bg:#0a0c10;
+  --bg2:#0e1117;
+  --panel:#11151d;
+  --panel2:#161b25;
+  --line:#1f2633;
+  --line2:#2a3344;
+  --txt:#e8edf4;
+  --mut:#8b94a7;
+  --dim:#525b6e;
+  --acc:#5cf2a2;
+  --acc-dim:rgba(92,242,162,.12);
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --disp:'Space Grotesk',system-ui,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{
+  background:var(--bg);color:var(--txt);font-family:var(--disp);
+  line-height:1.6;overflow-x:hidden;
+}
+::selection{background:var(--acc);color:var(--bg)}
+body::before{ /* subtle grid */
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:56px 56px;opacity:.25;
+  mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,black 30%,transparent 75%);
+  -webkit-mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,black 30%,transparent 75%);
+}
+a{color:inherit;text-decoration:none}
+#glow{
+  position:fixed;left:0;top:0;width:460px;height:460px;border-radius:50%;
+  pointer-events:none;z-index:2;opacity:0;transition:opacity .6s;
+  background:radial-gradient(circle,rgba(92,242,162,.08),transparent 60%);
+}
+@media(hover:none){#glow{display:none}}
+.mono{font-family:var(--mono)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+
+/* ---------- nav ---------- */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  border-bottom:1px solid transparent;transition:.3s;
+}
+nav.solid{background:rgba(10,12,16,.85);backdrop-filter:blur(12px);border-color:var(--line)}
+.nav-in{max-width:1120px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;gap:28px}
+.logo{font-family:var(--mono);font-weight:700;font-size:15px}
+.logo b{color:var(--acc)}
+.nav-links{display:flex;gap:24px;margin-left:auto;font-family:var(--mono);font-size:13px;color:var(--mut)}
+.nav-links a:hover{color:var(--acc)}
+.nav-links a.on{color:var(--acc)}
+.nav-links a.on::before{content:"▸ "}
+.status{
+  display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11.5px;
+  border:1px solid var(--line2);border-radius:99px;padding:5px 12px;color:var(--mut);white-space:nowrap;
+}
+.status .dot{width:7px;height:7px;border-radius:50%;background:var(--acc);animation:pulse 2s infinite}
+@media(max-width:640px){.nav-links{display:none}.status{margin-left:auto}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(92,242,162,.5)}50%{box-shadow:0 0 0 5px rgba(92,242,162,0)}}
+
+/* ---------- hero ---------- */
+.hero{min-height:100svh;display:flex;align-items:center;position:relative;padding:120px 0 80px}
+.hero::before{
+  content:"";position:absolute;top:-20%;left:50%;transform:translateX(-50%);
+  width:900px;height:600px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,rgba(92,242,162,.09),transparent 65%);
+}
+.eyebrow{font-family:var(--mono);font-size:13px;color:var(--acc);margin-bottom:20px;letter-spacing:.05em}
+.hero h1{
+  font-size:clamp(52px,10vw,112px);line-height:.95;font-weight:700;letter-spacing:-.03em;
+}
+.hero h1 .ghost{
+  display:block;color:transparent;-webkit-text-stroke:1.5px var(--line2);
+  transition:.4s;
+}
+.hero h1 .ghost:hover{color:var(--acc);-webkit-text-stroke:1.5px var(--acc)}
+.typedline{font-family:var(--mono);font-size:clamp(15px,2.2vw,20px);color:var(--mut);margin:30px 0 24px}
+.typedline .p{color:var(--acc)}
+.cursor{display:inline-block;width:.6em;background:var(--acc);animation:blink 1s steps(1) infinite;color:transparent}
+@keyframes blink{50%{opacity:0}}
+.hero p.sum{max-width:640px;color:var(--mut);font-size:16.5px}
+.hero p.sum b{color:var(--txt);font-weight:500}
+.cta{display:flex;gap:14px;margin-top:38px;flex-wrap:wrap}
+.btn{
+  font-family:var(--mono);font-size:13.5px;padding:13px 24px;border-radius:8px;
+  border:1px solid var(--line2);color:var(--txt);transition:.2s;display:inline-flex;align-items:center;gap:8px;cursor:pointer;background:none;
+}
+.btn:hover{border-color:var(--acc);color:var(--acc);transform:translateY(-2px)}
+.btn.fill{background:var(--acc);color:#08130d;border-color:var(--acc);font-weight:700}
+.btn.fill:hover{box-shadow:0 8px 30px rgba(92,242,162,.25);color:#08130d}
+.btn.line{border-color:rgba(92,242,162,.45);color:var(--acc)}
+.btn.line:hover{border-color:var(--acc);background:var(--acc-dim)}
+.btn.ghost{border-color:transparent;color:var(--dim);font-size:12px}
+.btn.ghost:hover{color:var(--mut);border-color:var(--line2);transform:none}
+.btn.soon{border-style:dashed;border-color:rgba(246,189,59,.4);color:#f6bd3b;cursor:default}
+.btn.soon:hover{transform:none;border-color:rgba(246,189,59,.7);color:#f6bd3b}
+.meta-row{display:flex;gap:26px;margin-top:56px;font-family:var(--mono);font-size:12.5px;color:var(--dim);flex-wrap:wrap}
+.meta-row span b{color:var(--mut);font-weight:500}
+
+/* ---------- sections ---------- */
+section{padding:110px 0}
+.sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:52px;border-bottom:1px solid var(--line);padding-bottom:18px;transition:border-color .6s}
+.sec-head .num{font-family:var(--mono);color:var(--acc);font-size:14px;transition:text-shadow .6s}
+section.current .sec-head{border-color:rgba(92,242,162,.45)}
+section.current .sec-head .num{text-shadow:0 0 14px var(--acc)}
+.sec-head h2{font-size:clamp(26px,4vw,38px);letter-spacing:.08em;font-weight:700;text-transform:uppercase}
+.sec-head .tail{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--dim);display:none}
+@media(min-width:700px){.sec-head .tail{display:block}}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s,transform .7s}
+.reveal.in{opacity:1;transform:none}
+
+/* ---------- skills ---------- */
+.skill-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.skill-card{
+  background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:22px;
+  transition:.25s;position:relative;overflow:hidden;
+}
+.skill-card:hover{border-color:var(--line2);transform:translateY(-3px)}
+.skill-card h3{font-family:var(--mono);font-size:11.5px;color:var(--dim);letter-spacing:.14em;margin-bottom:16px;font-weight:500}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  font-family:var(--mono);font-size:12.5px;padding:6px 12px;border-radius:6px;
+  background:var(--panel2);border:1px solid var(--line);color:var(--txt);transition:.2s;
+}
+.chip:hover{border-color:var(--acc);color:var(--acc)}
+
+/* strengths marquee */
+.marquee{
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  overflow:hidden;padding:20px 0;margin-top:70px;white-space:nowrap;
+  mask-image:linear-gradient(90deg,transparent,black 12%,black 88%,transparent);
+  -webkit-mask-image:linear-gradient(90deg,transparent,black 12%,black 88%,transparent);
+}
+.marquee .track{display:inline-block;animation:scroll 30s linear infinite}
+.marquee span{font-family:var(--mono);font-size:14px;color:var(--mut);margin:0 26px}
+.marquee span::before{content:"→ ";color:var(--acc)}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* ---------- projects ---------- */
+.proj-list{display:flex;flex-direction:column;gap:22px}
+.proj{
+  background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:34px;
+  display:grid;grid-template-columns:56px 1fr auto;gap:24px;transition:.25s;position:relative;overflow:hidden;
+}
+.proj::after{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:.4s;
+  background:radial-gradient(600px circle at var(--mx,50%) var(--my,50%),rgba(92,242,162,.06),transparent 45%);
+}
+.proj:hover::after{opacity:1}
+.proj:hover{border-color:var(--line2)}
+.proj .idx{font-family:var(--mono);color:var(--dim);font-size:14px;padding-top:6px}
+.proj h3{font-size:clamp(20px,3vw,27px);letter-spacing:-.01em;margin-bottom:4px}
+.proj .sub{font-family:var(--mono);font-size:12px;color:var(--acc);margin-bottom:14px}
+.proj p{color:var(--mut);font-size:15px;max-width:660px}
+.proj .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.tag{font-family:var(--mono);font-size:11.5px;padding:4px 10px;border-radius:5px;background:var(--acc-dim);color:var(--acc)}
+.proj .acts{display:flex;flex-direction:column;gap:10px;justify-content:center}
+.proj .acts .btn{font-size:12.5px;padding:10px 18px;justify-content:center}
+@media(max-width:760px){
+  .proj{grid-template-columns:1fr;padding:24px}
+  .proj .idx{display:none}
+  .proj .acts{flex-direction:row;flex-wrap:wrap}
+  section{padding:70px 0}
+}
+
+/* ---------- code explorer (modal) ---------- */
+dialog.code-modal{
+  border:none;background:transparent;padding:20px;margin:auto;
+  width:min(1100px,100vw);max-width:100vw;max-height:100vh;color:var(--txt);
+}
+dialog.code-modal::backdrop{background:rgba(4,6,10,.75);backdrop-filter:blur(6px)}
+html:has(dialog[open]){overflow:hidden}
+.x-close{
+  margin-left:6px;border:1px solid var(--line2);background:none;color:var(--mut);cursor:pointer;
+  font-family:var(--mono);font-size:13px;width:30px;height:30px;border-radius:7px;transition:.2s;flex:none;
+}
+.x-close:hover{border-color:var(--acc);color:var(--acc)}
+.x-hint{font-family:var(--mono);font-size:11px;color:var(--dim);padding:8px 18px;border-top:1px solid var(--line)}
+.explorer{
+  border:1px solid var(--line2);border-radius:14px;background:var(--bg2);overflow:hidden;
+  box-shadow:0 30px 80px rgba(0,0,0,.45);
+}
+.x-top{
+  display:flex;align-items:center;gap:14px;padding:13px 18px;
+  background:var(--panel);border-bottom:1px solid var(--line);flex-wrap:wrap;
+}
+.dots{display:flex;gap:7px}
+.dots i{width:11px;height:11px;border-radius:50%;background:var(--line2)}
+.dots i:nth-child(1){background:#f5655b}.dots i:nth-child(2){background:#f6bd3b}.dots i:nth-child(3){background:#43c645}
+.x-tabs{display:flex;gap:6px;flex-wrap:wrap}
+.x-tab{
+  font-family:var(--mono);font-size:12.5px;padding:7px 15px;border-radius:7px;cursor:pointer;
+  color:var(--mut);border:1px solid transparent;background:none;transition:.2s;
+}
+.x-tab:hover{color:var(--txt)}
+.x-tab.on{background:var(--acc-dim);color:var(--acc);border-color:rgba(92,242,162,.25)}
+.x-meta{margin-left:auto;display:flex;align-items:center;gap:16px;font-family:var(--mono);font-size:12px;color:var(--mut)}
+.x-meta a:hover{color:var(--acc)}
+.langbar{display:flex;width:130px;height:6px;border-radius:3px;overflow:hidden;background:var(--line)}
+.langbar i{height:100%}
+.x-body{display:grid;grid-template-columns:280px 1fr;grid-template-rows:minmax(0,1fr);height:min(640px,78vh);overflow:hidden}
+@media(max-width:820px){.x-body{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr);height:auto}.x-code{max-height:55vh}}
+.x-tree{
+  border-right:1px solid var(--line);overflow:auto;padding:14px 10px;font-family:var(--mono);font-size:13px;
+}
+@media(max-width:820px){.x-tree{max-height:240px;border-right:none;border-bottom:1px solid var(--line)}}
+.x-tree details{margin-left:2px}
+.x-tree summary{
+  cursor:pointer;list-style:none;padding:4px 8px;border-radius:6px;color:var(--mut);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;user-select:none;
+}
+.x-tree summary::before{content:"▸ ";color:var(--dim);font-size:11px}
+.x-tree details[open]>summary::before{content:"▾ "}
+.x-tree summary:hover{background:var(--panel2);color:var(--txt)}
+.x-tree .kids{margin-left:14px;border-left:1px solid var(--line);padding-left:6px}
+.x-file{
+  display:block;padding:4px 8px;border-radius:6px;color:var(--mut);cursor:pointer;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border:none;background:none;width:100%;text-align:left;
+  font:inherit;
+}
+.x-file:hover{background:var(--panel2);color:var(--txt)}
+.x-file.on{background:var(--acc-dim);color:var(--acc)}
+.x-main{display:flex;flex-direction:column;min-width:0;min-height:0}
+.x-fhead{
+  display:flex;align-items:center;gap:12px;padding:11px 18px;border-bottom:1px solid var(--line);
+  font-family:var(--mono);font-size:12.5px;color:var(--mut);background:var(--panel);
+}
+.x-fhead .path{color:var(--txt);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.x-fhead a{margin-left:auto;color:var(--dim);white-space:nowrap}
+.x-fhead a:hover{color:var(--acc)}
+.x-code{flex:1;overflow:auto;padding:18px 0;min-height:0}
+.x-code pre{
+  font-family:var(--mono);font-size:13px;line-height:1.65;counter-reset:line;
+  tab-size:4;
+}
+.code-line{
+  display:block;padding:0 20px 0 62px;position:relative;white-space:pre;counter-increment:line;min-height:1.65em;
+}
+.code-line::before{
+  content:counter(line);position:absolute;left:0;width:44px;text-align:right;
+  color:var(--dim);font-size:11.5px;user-select:none;
+}
+.code-line:hover{background:rgba(255,255,255,.025)}
+.x-msg{flex:1;display:flex;align-items:center;justify-content:center;color:var(--dim);font-family:var(--mono);font-size:13.5px;padding:40px;text-align:center;line-height:2}
+.x-msg .spin{
+  display:inline-block;width:16px;height:16px;border:2px solid var(--line2);border-top-color:var(--acc);
+  border-radius:50%;animation:rot .8s linear infinite;margin-right:10px;vertical-align:-3px;
+}
+@keyframes rot{to{transform:rotate(360deg)}}
+
+/* syntax colors */
+.hljs-comment,.hljs-quote{color:#525b6e;font-style:italic}
+.hljs-keyword,.hljs-selector-tag,.hljs-meta{color:#c792ea}
+.hljs-string,.hljs-attr,.hljs-regexp{color:#8fe8b4}
+.hljs-number,.hljs-literal{color:#f78c6c}
+.hljs-title,.hljs-title.function_,.hljs-title.class_{color:#82aaff}
+.hljs-built_in,.hljs-type{color:#89ddff}
+.hljs-tag,.hljs-name,.hljs-selector-class,.hljs-selector-id{color:#f07178}
+.hljs-attribute,.hljs-variable,.hljs-template-variable{color:#ffcb6b}
+.hljs-section,.hljs-bullet{color:var(--acc)}
+
+/* ---------- contact ---------- */
+.edu{
+  display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap;
+  background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:26px 30px;margin-bottom:80px;
+}
+.edu h3{font-size:19px}
+.edu p{color:var(--mut);font-size:14px}
+.edu .mono{color:var(--dim);font-size:12.5px}
+.contact-big{text-align:center;padding:20px 0 40px}
+.contact-big .eyebrow{margin-bottom:14px}
+.contact-big h2{font-size:clamp(22px,6vw,64px);letter-spacing:-.02em;line-height:1.1;margin-bottom:22px;overflow-wrap:anywhere}
+.contact-big h2 a{border-bottom:3px solid var(--acc);transition:.2s}
+.contact-big h2 a:hover{color:var(--acc)}
+.contact-big p{color:var(--mut);max-width:520px;margin:0 auto 34px}
+.c-links{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+footer{
+  border-top:1px solid var(--line);padding:26px 0;font-family:var(--mono);font-size:12px;color:var(--dim);
+}
+footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+footer a:hover{color:var(--acc)}
+</style>
+</head>
+<body>
+
+<div id="glow"></div>
+
+<nav id="nav">
+  <div class="nav-in">
+    <a class="logo" href="#top"><b>~/</b>niyesh</a>
+    <div class="nav-links">
+      <a href="#skills">skills</a>
+      <a href="#projects">projects</a>
+      <a href="#contact">contact</a>
+    </div>
+    <div class="status"><i class="dot"></i>available for internship</div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="eyebrow">~/ portfolio — frontend developer · Sindhupalchok, Nepal</div>
+    <h1>Niyesh<span class="ghost">Koirala</span></h1>
+    <div class="typedline mono"><span class="p">$</span> whoami<br><span class="p">&gt;</span> <span id="typed"></span><span class="cursor">|</span></div>
+    <p class="sum">
+      Diploma in Information Technology graduate with a solid foundation in <b>HTML, CSS, JavaScript and React</b>.
+      I build responsive, accessible interfaces and wire them to real data through <b>REST APIs</b>, MySQL and MongoDB Atlas.
+      I learn fast, enjoy untangling tricky bugs, and care about shipping clean, maintainable code.
+    </p>
+    <div class="cta">
+      <a class="btn fill" href="#projects">view projects ↓</a>
+      <a class="btn" href="Niyesh_Koirala_CV.pdf" download>download cv</a>
+      <a class="btn" href="https://github.com/niyeshkoirala-blip" target="_blank" rel="noopener">github ↗</a>
+    </div>
+    <div class="meta-row">
+      <span><b>4</b> shipped projects</span>
+      <span><b>MERN</b> full-stack</span>
+      <span><b>0→1</b> chess engine from scratch</span>
+      <span><b>100%</b> local-first AI</span>
+    </div>
+  </div>
+</header>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="num">01</span><h2>Technical Skills</h2>
+      <span class="tail mono">// stack.json</span>
+    </div>
+    <div class="skill-grid reveal">
+      <div class="skill-card"><h3>FRONTEND &amp; FRAMEWORKS</h3><div class="chips">
+        <span class="chip">React</span><span class="chip">TypeScript</span><span class="chip">JavaScript</span>
+        <span class="chip">HTML5</span><span class="chip">CSS3</span><span class="chip">Responsive Design</span>
+      </div></div>
+      <div class="skill-card"><h3>BACKEND</h3><div class="chips">
+        <span class="chip">Node.js</span><span class="chip">Express</span><span class="chip">Python</span>
+      </div></div>
+      <div class="skill-card"><h3>DATABASES</h3><div class="chips">
+        <span class="chip">MySQL</span><span class="chip">MSSQL</span><span class="chip">Oracle</span><span class="chip">MongoDB Atlas</span>
+      </div></div>
+      <div class="skill-card"><h3>API &amp; WEB SERVICES</h3><div class="chips">
+        <span class="chip">RESTful APIs</span><span class="chip">JSON</span>
+      </div></div>
+      <div class="skill-card"><h3>VERSION CONTROL</h3><div class="chips">
+        <span class="chip">Git</span><span class="chip">GitHub</span>
+      </div></div>
+      <div class="skill-card"><h3>TOOLS &amp; IDES</h3><div class="chips">
+        <span class="chip">VS Code</span><span class="chip">IntelliJ IDEA</span><span class="chip">GitHub Issues</span>
+      </div></div>
+    </div>
+  </div>
+  <div class="marquee" aria-hidden="true">
+    <div class="track" id="marq">
+      <span>Team Collaboration</span><span>Debugging</span><span>Adaptability</span>
+      <span>Time Management</span><span>Problem Solving</span><span>Ownership</span>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="num">02</span><h2>Projects</h2>
+      <span class="tail mono">// git log --oneline</span>
+    </div>
+    <div class="proj-list">
+
+      <article class="proj reveal">
+        <div class="idx">01</div>
+        <div>
+          <h3>Lumio — AI Study Companion</h3>
+          <div class="sub">full-stack MERN · local vision LLM</div>
+          <p>A study app where students scan homework problems, take notes and handwrite on a canvas.
+             A locally-hosted vision LLM (Ollama + Qwen2.5-VL) reads photos and handwriting, explains solutions
+             step-by-step, and generates summaries and quizzes — 100% free to run with no API keys or usage costs.</p>
+          <div class="tags"><span class="tag">React</span><span class="tag">Node</span><span class="tag">MongoDB</span><span class="tag">Ollama</span><span class="tag">Qwen2.5-VL</span></div>
+        </div>
+        <div class="acts">
+          <span class="btn soon" title="not deployed yet — runs locally">● live demo · work in progress</span>
+          <button class="btn fill" data-explore="lumio">browse source</button>
+          <a class="btn ghost" href="https://github.com/niyeshkoirala-blip/lumio" target="_blank" rel="noopener">github ↗</a>
+        </div>
+      </article>
+
+      <article class="proj reveal">
+        <div class="idx">02</div>
+        <div>
+          <h3>GAMBIT — Chess Platform</h3>
+          <div class="sub">full-stack · engine built from scratch</div>
+          <p>A full-stack chess platform with online multiplayer, local pass-and-play, and engine modes.
+             The move-validation engine — legal moves, check, checkmate, stalemate, castling, en passant, promotion —
+             is written from scratch with no chess library. Stockfish drives the bot over UCI with adjustable
+             difficulty and per-move analysis grading each move from Brilliant to Blunder.</p>
+          <div class="tags"><span class="tag">React</span><span class="tag">Node</span><span class="tag">Stockfish</span><span class="tag">UCI</span></div>
+        </div>
+        <div class="acts">
+          <a class="btn fill" href="https://chess-with-computer-production.up.railway.app" target="_blank" rel="noopener">play it live ↗</a>
+          <button class="btn line" data-explore="chess-with-computer">browse source</button>
+          <a class="btn ghost" href="https://github.com/niyeshkoirala-blip/chess-with-computer" target="_blank" rel="noopener">github ↗</a>
+        </div>
+      </article>
+
+      <article class="proj reveal">
+        <div class="idx">03</div>
+        <div>
+          <h3>DualCart — Groceries + Apparel Storefront</h3>
+          <div class="sub">full-stack e-commerce · one process, one DB file</div>
+          <p>A custom-built e-commerce site — no Shopify, no WordPress — selling groceries and apparel
+             from a single catalog, cart and checkout. Live stock straight from the database with atomic,
+             oversell-proof checkout; Razorpay payments (UPI/cards) verified server-side plus Cash on Delivery;
+             customer accounts and order tracking; and a full admin dashboard with revenue stats, inline stock
+             edits, a homepage editor and CSV bulk upload.</p>
+          <div class="tags"><span class="tag">Next.js 15</span><span class="tag">React 19</span><span class="tag">SQLite</span><span class="tag">Razorpay</span></div>
+        </div>
+        <div class="acts">
+          <a class="btn fill" href="https://dualcart.onrender.com/" target="_blank" rel="noopener">visit the store ↗</a>
+          <button class="btn line" data-explore="dualcart">browse source</button>
+          <a class="btn ghost" href="https://github.com/niyeshkoirala-blip/dualcart" target="_blank" rel="noopener">github ↗</a>
+        </div>
+      </article>
+
+      <article class="proj reveal">
+        <div class="idx">04</div>
+        <div>
+          <h3>Pitch Side News — Football Page Bot</h3>
+          <div class="sub">serverless automation · GitHub Actions cron</div>
+          <p>An end-to-end automation running a football-news Facebook page with zero manual input. It pulls stories
+             from major sports RSS feeds, ranks them with a weighted 300+ signal breaking-news scoring engine,
+             generates a branded 1080×1080 post image with Pillow, and publishes via a Make.com webhook —
+             running every 30 minutes on GitHub Actions with no server and full deduplication.</p>
+          <div class="tags"><span class="tag">Python</span><span class="tag">Pillow</span><span class="tag">RSS</span><span class="tag">GitHub Actions</span></div>
+        </div>
+        <div class="acts">
+          <a class="btn fill" href="https://www.facebook.com/profile.php?id=61591342682965" target="_blank" rel="noopener">see the automated page ↗</a>
+          <button class="btn line" data-explore="footballauto">browse source</button>
+          <a class="btn ghost" href="https://github.com/niyeshkoirala-blip/footballauto" target="_blank" rel="noopener">github ↗</a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<dialog class="code-modal" id="codeDlg">
+    <div class="explorer">
+      <div class="x-top">
+        <div class="dots"><i></i><i></i><i></i></div>
+        <div class="x-tabs" id="tabs"></div>
+        <div class="x-meta" id="repoMeta"></div>
+        <button class="x-close" id="xClose" aria-label="close">✕</button>
+      </div>
+      <div class="x-body">
+        <div class="x-tree" id="tree"><div class="x-msg"><span><span class="spin"></span>loading repo…</span></div></div>
+        <div class="x-main">
+          <div class="x-fhead" id="fhead" hidden>
+            <span class="path" id="fpath"></span>
+            <a id="fraw" href="#" target="_blank" rel="noopener">view on github ↗</a>
+          </div>
+          <div class="x-code" id="codeWrap">
+            <div class="x-msg" id="codeMsg"><span>← pick a file to read its source</span></div>
+            <pre hidden id="codePre"><code id="codeEl"></code></pre>
+          </div>
+        </div>
+      </div>
+      <div class="x-hint">fetched live from the GitHub API — this is the real code · esc to close</div>
+    </div>
+</dialog>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="num">03</span><h2>Education &amp; Contact</h2>
+      <span class="tail mono">// ping me</span>
+    </div>
+    <div class="edu reveal">
+      <div>
+        <h3>Dinesh Ramji Polytechnic Institute</h3>
+        <p>Diploma in Information Technology</p>
+      </div>
+      <span class="mono">CTEVT · Nepal</span>
+    </div>
+    <div class="contact-big reveal">
+      <div class="eyebrow">$ mail -s "internship opportunity"</div>
+      <h2><a href="mailto:niyeshkoirala@gmail.com">niyeshkoirala@gmail.com</a></h2>
+      <p>Looking for an internship where I can contribute to a real product while growing alongside an experienced team.</p>
+      <div class="c-links">
+        <a class="btn" href="tel:+9779849085828">+977 9849085828</a>
+        <a class="btn" href="https://github.com/niyeshkoirala-blip" target="_blank" rel="noopener">github.com/niyeshkoirala-blip ↗</a>
+        <a class="btn" href="Niyesh_Koirala_CV.pdf" download>download cv (pdf)</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Niyesh Koirala — built with plain HTML/CSS/JS, no framework</span>
+    <span>code in the explorer is fetched live via the <a href="https://docs.github.com/rest" target="_blank" rel="noopener">GitHub REST API</a></span>
+  </div>
+</footer>
+
+<script>
+/* ---------- tiny helpers ---------- */
+const $=id=>document.getElementById(id);
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+/* ---------- nav / reveal / typing / marquee ---------- */
+addEventListener('scroll',()=>$('nav').classList.toggle('solid',scrollY>40),{passive:true});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+$('marq').innerHTML+=$('marq').innerHTML; // seamless loop
+
+const WORDS=['good listener','fast learner','team player','problem solver','debugger at heart','reliable & self-driven'];
+let wi=0,ci=0,del=false;
+(function type(){
+  const w=WORDS[wi];
+  ci+=del?-1:1;
+  $('typed').textContent=w.slice(0,ci);
+  let d=del?35:70;
+  if(!del&&ci===w.length){d=1700;del=true}
+  else if(del&&ci===0){del=false;wi=(wi+1)%WORDS.length;d=400}
+  setTimeout(type,d);
+})();
+
+/* cursor-follow glow (lerped so it trails behind the mouse) */
+const glow=$('glow');
+let gx=innerWidth/2,gy=innerHeight/2,tx=gx,ty=gy;
+addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY;glow.style.opacity=1},{passive:true});
+(function follow(){
+  gx+=(tx-gx)*.07;gy+=(ty-gy)*.07;
+  glow.style.transform=`translate(${gx-230}px,${gy-230}px)`;
+  requestAnimationFrame(follow);
+})();
+
+/* scroll-spy: highlight the section you're in (nav link + section header) */
+const spy=new IntersectionObserver(es=>es.forEach(e=>{
+  e.target.classList.toggle('current',e.isIntersecting);
+  document.querySelectorAll('.nav-links a').forEach(a=>{
+    if(a.getAttribute('href')==='#'+e.target.id)a.classList.toggle('on',e.isIntersecting);
+  });
+}),{rootMargin:'-35% 0px -55% 0px'});
+document.querySelectorAll('section[id]').forEach(s=>spy.observe(s));
+
+/* spotlight follows mouse on project cards */
+document.querySelectorAll('.proj').forEach(c=>c.addEventListener('mousemove',e=>{
+  const r=c.getBoundingClientRect();
+  c.style.setProperty('--mx',(e.clientX-r.left)+'px');
+  c.style.setProperty('--my',(e.clientY-r.top)+'px');
+}));
+
+/* ---------- github code explorer ---------- */
+const USER='niyeshkoirala-blip';
+const REPOS=[
+  {repo:'lumio',label:'lumio'},
+  {repo:'chess-with-computer',label:'gambit'},
+  {repo:'dualcart',label:'dualcart'},
+  {repo:'footballauto',label:'pitch-side'},
+];
+const LANG_COLORS={JavaScript:'#f1e05a',TypeScript:'#3178c6',Python:'#3572A5',HTML:'#e34c26',CSS:'#663399',SCSS:'#c6538c',Shell:'#89e051',C:'#555555','C++':'#f34b7d',Java:'#b07219',Vue:'#41b883',Dockerfile:'#384d54'};
+const EXT_LANG={js:'javascript',jsx:'javascript',mjs:'javascript',cjs:'javascript',ts:'typescript',tsx:'typescript',py:'python',html:'xml',htm:'xml',xml:'xml',svg:'xml',css:'css',scss:'scss',json:'json',md:'markdown',yml:'yaml',yaml:'yaml',sh:'bash',bash:'bash',sql:'sql',c:'c',h:'c',cpp:'cpp',java:'java',rs:'rust',go:'go',txt:'plaintext',env:'plaintext',gitignore:'plaintext',lock:'json'};
+const BINARY_EXT=new Set(['png','jpg','jpeg','gif','ico','webp','woff','woff2','ttf','eot','otf','mp3','mp4','webm','wav','pdf','zip','gz','tar','exe','bin','pyc','wasm','avif']);
+const MAX_FILE=400_000; // bytes
+
+async function gh(path){
+  const key='gh:'+path;
+  const hit=sessionStorage.getItem(key);
+  if(hit)return JSON.parse(hit);
+  const r=await fetch('https://api.github.com'+path,{headers:{Accept:'application/vnd.github+json'}});
+  if(!r.ok)throw Object.assign(new Error('GitHub API '+r.status),{status:r.status});
+  const j=await r.json();
+  try{sessionStorage.setItem(key,JSON.stringify(j))}catch{} // quota — fine, just no cache
+  return j;
+}
+
+let current=null;
+
+function msg(el,html){el.innerHTML='<div class="x-msg"><span>'+html+'</span></div>'}
+const loading=t=>'<span class="spin"></span>'+t;
+
+async function loadRepo(repo){
+  if(current===repo)return;
+  current=repo;
+  document.querySelectorAll('.x-tab').forEach(b=>b.classList.toggle('on',b.dataset.repo===repo));
+  msg($('tree'),loading('cloning '+repo+'…'));
+  $('fhead').hidden=true;$('codePre').hidden=true;
+  $('codeMsg').style.display='';
+  $('codeMsg').innerHTML='<span>← pick a file to read its source</span>';
+  $('repoMeta').innerHTML='';
+  try{
+    const meta=await gh(`/repos/${USER}/${repo}`);
+    const [tree,langs]=await Promise.all([
+      gh(`/repos/${USER}/${repo}/git/trees/${encodeURIComponent(meta.default_branch)}?recursive=1`),
+      gh(`/repos/${USER}/${repo}/languages`).catch(()=>({})),
+    ]);
+    if(current!==repo)return; // user switched tabs mid-fetch
+    renderMeta(meta,langs);
+    renderTree(repo,tree.tree||[],meta.default_branch);
+    // auto-open the README if there is one
+    const readme=(tree.tree||[]).find(t=>t.type==='blob'&&/^readme\.md$/i.test(t.path));
+    if(readme)openFile(repo,readme.path,meta.default_branch);
+  }catch(e){
+    if(current!==repo)return;
+    msg($('tree'),e.status===403
+      ?'GitHub API rate limit hit (60 req/hr).<br>Try again in a bit — or view the repo on GitHub.'
+      :'could not load repo ('+esc(e.message)+')');
+  }
+}
+
+function renderMeta(meta,langs){
+  const total=Object.values(langs).reduce((a,b)=>a+b,0)||1;
+  const bar=Object.entries(langs).map(([l,n])=>
+    `<i style="width:${(n/total*100).toFixed(1)}%;background:${LANG_COLORS[l]||'#8b949e'}" title="${esc(l)}"></i>`).join('');
+  const top=Object.keys(langs)[0]||meta.language||'';
+  $('repoMeta').innerHTML=
+    `<span title="stars">★ ${meta.stargazers_count}</span>`+
+    (top?`<span>${esc(top)}</span>`:'')+
+    (bar?`<span class="langbar">${bar}</span>`:'')+
+    `<a href="${meta.html_url}" target="_blank" rel="noopener">↗</a>`;
+}
+
+function renderTree(repo,items,branch){
+  const root={dirs:{},files:[]};
+  for(const it of items){
+    const parts=it.path.split('/');
+    let n=root;
+    let skip=false;
+    for(let i=0;i<parts.length-1;i++){
+      if(parts[i]==='node_modules'){skip=true;break}
+      n=n.dirs[parts[i]]??={dirs:{},files:[]};
+    }
+    if(!skip&&it.type==='blob')n.files.push({name:parts[parts.length-1],path:it.path});
+  }
+  const html=node=>{
+    const dirs=Object.keys(node.dirs).sort().map(d=>
+      `<details><summary title="${esc(d)}">${esc(d)}</summary><div class="kids">${html(node.dirs[d])}</div></details>`).join('');
+    const files=node.files.sort((a,b)=>a.name.localeCompare(b.name)).map(f=>
+      `<button class="x-file" data-path="${esc(f.path)}" title="${esc(f.path)}">${esc(f.name)}</button>`).join('');
+    return dirs+files;
+  };
+  $('tree').innerHTML=html(root)||'<div class="x-msg"><span>empty repo</span></div>';
+  $('tree').querySelectorAll('.x-file').forEach(b=>b.addEventListener('click',()=>openFile(repo,b.dataset.path,branch)));
+}
+
+async function openFile(repo,path,branch){
+  document.querySelectorAll('.x-file').forEach(b=>b.classList.toggle('on',b.dataset.path===path));
+  const ext=path.split('.').pop().toLowerCase();
+  const rawUrl=`https://github.com/${USER}/${repo}/blob/${branch}/${path}`;
+  $('fhead').hidden=false;
+  $('fpath').textContent=path;
+  $('fraw').href=rawUrl;
+  $('codePre').hidden=true;
+  $('codeMsg').style.display='';
+  if(BINARY_EXT.has(ext)){$('codeMsg').innerHTML='<span>binary file — view it on GitHub ↗</span>';return}
+  $('codeMsg').innerHTML='<span>'+loading('reading '+esc(path)+'…')+'</span>';
+  try{
+    const j=await gh(`/repos/${USER}/${repo}/contents/${path.split('/').map(encodeURIComponent).join('/')}?ref=${encodeURIComponent(branch)}`);
+    if($('fpath').textContent!==path)return; // user clicked another file mid-fetch
+    if(j.size>MAX_FILE||!j.content){$('codeMsg').innerHTML='<span>file too large to preview — view it on GitHub ↗</span>';return}
+    const bytes=Uint8Array.from(atob(j.content.replace(/\n/g,'')),c=>c.charCodeAt(0));
+    const text=new TextDecoder().decode(bytes);
+    if(text.includes('\u0000')){$('codeMsg').innerHTML='<span>binary file — view it on GitHub ↗</span>';return}
+    const lang=EXT_LANG[ext];
+    let hi;
+    try{hi=lang?hljs.highlight(text,{language:lang}).value:esc(text)}
+    catch{hi=esc(text)}
+    $('codeEl').innerHTML=hi.split('\n').map(l=>`<span class="code-line">${l||' '}</span>`).join('');
+    $('codeMsg').style.display='none';
+    $('codePre').hidden=false;
+    $('codeWrap').scrollTop=0;
+  }catch(e){
+    $('codeMsg').innerHTML='<span>'+(e.status===403?'GitHub rate limit hit — try again in a bit':'could not load file')+'</span>';
+  }
+}
+
+/* tabs */
+$('tabs').innerHTML=REPOS.map(r=>`<button class="x-tab" data-repo="${r.repo}">${r.label}</button>`).join('');
+document.querySelectorAll('.x-tab').forEach(b=>b.addEventListener('click',()=>loadRepo(b.dataset.repo)));
+
+/* project cards → open modal explorer; repo loads only on demand */
+const dlg=$('codeDlg');
+document.querySelectorAll('[data-explore]').forEach(b=>b.addEventListener('click',()=>{
+  dlg.showModal();
+  loadRepo(b.dataset.explore);
+}));
+$('xClose').addEventListener('click',()=>dlg.close());
+dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()}); // backdrop click
+</script>
+</body>
+</html>
