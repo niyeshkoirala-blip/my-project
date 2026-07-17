@@ -51,6 +51,7 @@ async function describe(repo, readme, key) {
     headers: { Authorization: 'Bearer ' + key, 'Content-Type': 'application/json' },
     body: JSON.stringify({
       model: MODEL,
+      temperature: 0, // stable output for unchanged READMEs, so the snapshot commit below doesn't churn
       response_format: { type: 'json_object' },
       messages: [
         { role: 'system', content: SYSTEM },
@@ -71,6 +72,35 @@ async function describe(repo, readme, key) {
     throw new Error('Groq returned an unusable shape: ' + JSON.stringify(out).slice(0, 200));
   }
   return out;
+}
+
+// After a successful build, commit the result back to the repo as projects.json so
+// the fallback snapshot the frontend uses when this API fails stays fresh. Needs
+// GITHUB_TOKEN with contents:write on the portfolio repo; silently skipped without it.
+// Each commit redeploys the site, so: no commit if content is unchanged, and at most
+// one snapshot commit per day — Groq prose can drift between runs even at temp 0,
+// and without the gate that drift would commit+redeploy on every cache miss.
+export async function syncSnapshot(projects) {
+  if (!process.env.GITHUB_TOKEN) return 'skipped: no GITHUB_TOKEN';
+  const path = `/repos/${USER}/my-project/contents/projects.json`;
+  const body = JSON.stringify(projects, null, 2) + '\n';
+  const cur = await gh(path).catch(() => null); // null = file missing/deleted; PUT below recreates it
+  if (cur && Buffer.from(cur.content, 'base64').toString() === body) return 'skipped: unchanged';
+  const last = await gh(`/repos/${USER}/my-project/commits?path=projects.json&per_page=1`).catch(() => []);
+  if (last[0] && Date.now() - new Date(last[0].commit.committer.date) < 86400e3) {
+    return 'skipped: snapshot already committed today';
+  }
+  const r = await fetch('https://api.github.com' + path, {
+    method: 'PUT',
+    headers: { ...ghHeaders(), 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      message: 'chore: refresh projects.json snapshot',
+      content: Buffer.from(body).toString('base64'),
+      ...(cur ? { sha: cur.sha } : {}),
+    }),
+  });
+  if (!r.ok) throw new Error('snapshot commit failed: GitHub ' + r.status);
+  return 'committed';
 }
 
 export default async function handler(req, res) {
@@ -103,6 +133,9 @@ export default async function handler(req, res) {
     }))).filter(Boolean);
 
     if (!projects.length) return res.status(502).json({ error: 'no projects could be built' });
+
+    // a snapshot failure must never take down the live response
+    console.log('snapshot:', await syncSnapshot(projects).catch(e => e.message));
 
     // browser refetches each load; the CDN answers instantly and revalidates in the
     // background, so only the day's first visitor ever waits on Groq.
