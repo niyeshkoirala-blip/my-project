@@ -1,1 +1,57 @@
-
+[
+  {
+    "repo": "courtbook",
+    "title": "CourtBook",
+    "sub": "full-stack · futsal booking platform",
+    "description": "CourtBook is a futsal court booking platform where players can discover courts and book slots in real time, and owners can manage venues, schedules, and bookings. The platform features derived availability, atomic slot creation, and secure payment gateways. It also includes an owner dashboard with reports and a player frontend with booking flow and cancellation options.",
+    "tags": [
+      "React",
+      "Node",
+      "MongoDB"
+    ],
+    "homepage": "",
+    "url": "https://github.com/niyeshkoirala-blip/courtbook"
+  },
+  {
+    "repo": "footballauto",
+    "title": "FOOTBALLAUTO",
+    "sub": "facebook automation bot",
+    "description": "The bot scans top football news feeds, scores each story for significance, and automatically posts breaking news to a Facebook page. It also creates branded images and Facebook Reels with background music. The bot uses AI to write captions and scores stories based on signals like confirmed transfers, trophies won, and match results.",
+    "tags": [
+      "Python",
+      "Facebook API",
+      "Pexels API",
+      "Groq API"
+    ],
+    "homepage": "",
+    "url": "https://github.com/niyeshkoirala-blip/footballauto"
+  },
+  {
+    "repo": "chess-with-computer",
+    "title": "GAMBIT",
+    "sub": "full-stack · chess platform",
+    "description": "GAMBIT is a full-stack multiplayer chess platform supporting online play, local pass-and-play, and engine-powered game modes. It includes features like account registration, match history, move replay, and move quality evaluation. The platform is built with Node.js, Socket.io, MongoDB, and vanilla JavaScript, and utilizes the Stockfish chess engine for bot moves.",
+    "tags": [
+      "Node.js",
+      "Socket.io",
+      "MongoDB",
+      "JavaScript"
+    ],
+    "homepage": "https://chess-with-computer-production.up.railway.app/",
+    "url": "https://github.com/niyeshkoirala-blip/chess-with-computer"
+  },
+  {
+    "repo": "dualcart",
+    "title": "DualCart",
+    "sub": "full-stack e-commerce",
+    "description": "A custom-built e-commerce site selling groceries and apparel, featuring a unified catalog, real-time stock updates, and server-side payment verification. It handles variants, search, and filters, with a responsive and animated UI. The site also includes customer accounts, order tracking, and an admin dashboard for managing orders, inventory, and revenue.",
+    "tags": [
+      "Next.js",
+      "React",
+      "SQLite",
+      "Razorpay"
+    ],
+    "homepage": "",
+    "url": "https://github.com/niyeshkoirala-blip/dualcart"
+  }
+]
