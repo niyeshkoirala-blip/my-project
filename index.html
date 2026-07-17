@@ -606,11 +606,12 @@ const dlg=$('codeDlg');
 $('xClose').addEventListener('click',()=>dlg.close());
 dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()}); // backdrop click
 
-/* ---------- projects ---------- */
-// ponytail: static snapshot, not a live API. Regenerate by hand when you ship a
-// project — 4 repos with stable READMEs don't need a serverless LLM pipeline.
-fetch('projects.json')
+/* ---------- projects — built live from github + groq, see api/projects.mjs ---------- */
+// projects.json is a committed snapshot: served when the API is missing (static/local
+// serving) or failing (no GROQ_API_KEY yet), so the section never renders blank.
+fetch('/api/projects')
   .then(r=>{if(!r.ok)throw new Error(r.status);return r.json()})
+  .catch(()=>fetch('projects.json').then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}))
   .then(renderProjects)
   .catch(e=>{
     console.error('projects:',e);
