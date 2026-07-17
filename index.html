@@ -328,7 +328,7 @@ footer a:hover{color:var(--acc)}
       <a class="btn" href="https://github.com/niyeshkoirala-blip" target="_blank" rel="noopener">github ↗</a>
     </div>
     <div class="meta-row">
-      <span><b>4</b> shipped projects</span>
+      <span><b id="projCount">4</b> shipped projects</span>
       <span><b>MERN</b> full-stack</span>
       <span><b>0→1</b> chess engine from scratch</span>
       <span><b>100%</b> local-first AI</span>
@@ -378,80 +378,8 @@ footer a:hover{color:var(--acc)}
       <span class="num">02</span><h2>Projects</h2>
       <span class="tail mono">// git log --oneline</span>
     </div>
-    <div class="proj-list">
-
-      <article class="proj reveal">
-        <div class="idx">01</div>
-        <div>
-          <h3>Lumio — AI Study Companion</h3>
-          <div class="sub">full-stack MERN · local vision LLM</div>
-          <p>A study app where students scan homework problems, take notes and handwrite on a canvas.
-             A locally-hosted vision LLM (Ollama + Qwen2.5-VL) reads photos and handwriting, explains solutions
-             step-by-step, and generates summaries and quizzes — 100% free to run with no API keys or usage costs.</p>
-          <div class="tags"><span class="tag">React</span><span class="tag">Node</span><span class="tag">MongoDB</span><span class="tag">Ollama</span><span class="tag">Qwen2.5-VL</span></div>
-        </div>
-        <div class="acts">
-          <span class="btn soon" title="not deployed yet — runs locally">● live demo · work in progress</span>
-          <button class="btn fill" data-explore="lumio">browse source</button>
-          <a class="btn ghost" href="https://github.com/niyeshkoirala-blip/lumio" target="_blank" rel="noopener">github ↗</a>
-        </div>
-      </article>
-
-      <article class="proj reveal">
-        <div class="idx">02</div>
-        <div>
-          <h3>GAMBIT — Chess Platform</h3>
-          <div class="sub">full-stack · engine built from scratch</div>
-          <p>A full-stack chess platform with online multiplayer, local pass-and-play, and engine modes.
-             The move-validation engine — legal moves, check, checkmate, stalemate, castling, en passant, promotion —
-             is written from scratch with no chess library. Stockfish drives the bot over UCI with adjustable
-             difficulty and per-move analysis grading each move from Brilliant to Blunder.</p>
-          <div class="tags"><span class="tag">React</span><span class="tag">Node</span><span class="tag">Stockfish</span><span class="tag">UCI</span></div>
-        </div>
-        <div class="acts">
-          <a class="btn fill" href="https://chess-with-computer-production.up.railway.app" target="_blank" rel="noopener">play it live ↗</a>
-          <button class="btn line" data-explore="chess-with-computer">browse source</button>
-          <a class="btn ghost" href="https://github.com/niyeshkoirala-blip/chess-with-computer" target="_blank" rel="noopener">github ↗</a>
-        </div>
-      </article>
-
-      <article class="proj reveal">
-        <div class="idx">03</div>
-        <div>
-          <h3>DualCart — Groceries + Apparel Storefront</h3>
-          <div class="sub">full-stack e-commerce · one process, one DB file</div>
-          <p>A custom-built e-commerce site — no Shopify, no WordPress — selling groceries and apparel
-             from a single catalog, cart and checkout. Live stock straight from the database with atomic,
-             oversell-proof checkout; Razorpay payments (UPI/cards) verified server-side plus Cash on Delivery;
-             customer accounts and order tracking; and a full admin dashboard with revenue stats, inline stock
-             edits, a homepage editor and CSV bulk upload.</p>
-          <div class="tags"><span class="tag">Next.js 15</span><span class="tag">React 19</span><span class="tag">SQLite</span><span class="tag">Razorpay</span></div>
-        </div>
-        <div class="acts">
-          <a class="btn fill" href="https://dualcart.onrender.com/" target="_blank" rel="noopener">visit the store ↗</a>
-          <button class="btn line" data-explore="dualcart">browse source</button>
-          <a class="btn ghost" href="https://github.com/niyeshkoirala-blip/dualcart" target="_blank" rel="noopener">github ↗</a>
-        </div>
-      </article>
-
-      <article class="proj reveal">
-        <div class="idx">04</div>
-        <div>
-          <h3>Pitch Side News — Football Page Bot</h3>
-          <div class="sub">serverless automation · GitHub Actions cron</div>
-          <p>An end-to-end automation running a football-news Facebook page with zero manual input. It pulls stories
-             from major sports RSS feeds, ranks them with a weighted 300+ signal breaking-news scoring engine,
-             generates a branded 1080×1080 post image with Pillow, and publishes via a Make.com webhook —
-             running every 30 minutes on GitHub Actions with no server and full deduplication.</p>
-          <div class="tags"><span class="tag">Python</span><span class="tag">Pillow</span><span class="tag">RSS</span><span class="tag">GitHub Actions</span></div>
-        </div>
-        <div class="acts">
-          <a class="btn fill" href="https://www.facebook.com/profile.php?id=61591342682965" target="_blank" rel="noopener">see the automated page ↗</a>
-          <button class="btn line" data-explore="footballauto">browse source</button>
-          <a class="btn ghost" href="https://github.com/niyeshkoirala-blip/footballauto" target="_blank" rel="noopener">github ↗</a>
-        </div>
-      </article>
-
+    <div class="proj-list" id="projList">
+      <div class="x-msg"><span><span class="spin"></span>loading projects…</span></div>
     </div>
   </div>
 </section>
@@ -556,21 +484,8 @@ const spy=new IntersectionObserver(es=>es.forEach(e=>{
 }),{rootMargin:'-35% 0px -55% 0px'});
 document.querySelectorAll('section[id]').forEach(s=>spy.observe(s));
 
-/* spotlight follows mouse on project cards */
-document.querySelectorAll('.proj').forEach(c=>c.addEventListener('mousemove',e=>{
-  const r=c.getBoundingClientRect();
-  c.style.setProperty('--mx',(e.clientX-r.left)+'px');
-  c.style.setProperty('--my',(e.clientY-r.top)+'px');
-}));
-
 /* ---------- github code explorer ---------- */
 const USER='niyeshkoirala-blip';
-const REPOS=[
-  {repo:'lumio',label:'lumio'},
-  {repo:'chess-with-computer',label:'gambit'},
-  {repo:'dualcart',label:'dualcart'},
-  {repo:'footballauto',label:'pitch-side'},
-];
 const LANG_COLORS={JavaScript:'#f1e05a',TypeScript:'#3178c6',Python:'#3572A5',HTML:'#e34c26',CSS:'#663399',SCSS:'#c6538c',Shell:'#89e051',C:'#555555','C++':'#f34b7d',Java:'#b07219',Vue:'#41b883',Dockerfile:'#384d54'};
 const EXT_LANG={js:'javascript',jsx:'javascript',mjs:'javascript',cjs:'javascript',ts:'typescript',tsx:'typescript',py:'python',html:'xml',htm:'xml',xml:'xml',svg:'xml',css:'css',scss:'scss',json:'json',md:'markdown',yml:'yaml',yaml:'yaml',sh:'bash',bash:'bash',sql:'sql',c:'c',h:'c',cpp:'cpp',java:'java',rs:'rust',go:'go',txt:'plaintext',env:'plaintext',gitignore:'plaintext',lock:'json'};
 const BINARY_EXT=new Set(['png','jpg','jpeg','gif','ico','webp','woff','woff2','ttf','eot','otf','mp3','mp4','webm','wav','pdf','zip','gz','tar','exe','bin','pyc','wasm','avif']);
@@ -687,18 +602,59 @@ async function openFile(repo,path,branch){
   }
 }
 
-/* tabs */
-$('tabs').innerHTML=REPOS.map(r=>`<button class="x-tab" data-repo="${r.repo}">${r.label}</button>`).join('');
-document.querySelectorAll('.x-tab').forEach(b=>b.addEventListener('click',()=>loadRepo(b.dataset.repo)));
-
-/* project cards → open modal explorer; repo loads only on demand */
 const dlg=$('codeDlg');
-document.querySelectorAll('[data-explore]').forEach(b=>b.addEventListener('click',()=>{
-  dlg.showModal();
-  loadRepo(b.dataset.explore);
-}));
 $('xClose').addEventListener('click',()=>dlg.close());
 dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()}); // backdrop click
+
+/* ---------- projects — built live from github, see api/projects.mjs ---------- */
+fetch('/api/projects')
+  .then(async r=>{if(!r.ok)throw new Error((await r.json().catch(()=>({}))).error||r.status);return r.json()})
+  .then(renderProjects)
+  .catch(e=>{
+    console.error('projects:',e);
+    msg($('projList'),
+      `could not load projects — see <a href="https://github.com/${USER}" target="_blank" rel="noopener">github.com/${USER}</a>`);
+  });
+
+function renderProjects(list){
+  $('projList').innerHTML=list.map((p,i)=>`
+    <article class="proj reveal">
+      <div class="idx">${String(i+1).padStart(2,'0')}</div>
+      <div>
+        <h3>${esc(p.title)}</h3>
+        ${p.sub?`<div class="sub">${esc(p.sub)}</div>`:''}
+        <p>${esc(p.description)}</p>
+        <div class="tags">${p.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>
+      </div>
+      <div class="acts">
+        ${p.homepage
+          ?`<a class="btn fill" href="${esc(p.homepage)}" target="_blank" rel="noopener">view it live ↗</a>`
+          :`<span class="btn soon" title="not deployed yet">● live demo · work in progress</span>`}
+        <button class="btn ${p.homepage?'line':'fill'}" data-explore="${esc(p.repo)}">browse source</button>
+        <a class="btn ghost" href="${esc(p.url)}" target="_blank" rel="noopener">github ↗</a>
+      </div>
+    </article>`).join('');
+
+  $('projCount').textContent=list.length;
+
+  // explorer tabs mirror the same repo list
+  $('tabs').innerHTML=list.map(p=>`<button class="x-tab" data-repo="${esc(p.repo)}">${esc(p.repo)}</button>`).join('');
+  document.querySelectorAll('.x-tab').forEach(b=>b.addEventListener('click',()=>loadRepo(b.dataset.repo)));
+
+  // cards render async, so wire them up here rather than at load
+  document.querySelectorAll('.proj').forEach(c=>{
+    io.observe(c);
+    c.addEventListener('mousemove',e=>{ // spotlight follows the mouse
+      const r=c.getBoundingClientRect();
+      c.style.setProperty('--mx',(e.clientX-r.left)+'px');
+      c.style.setProperty('--my',(e.clientY-r.top)+'px');
+    });
+  });
+  document.querySelectorAll('[data-explore]').forEach(b=>b.addEventListener('click',()=>{
+    dlg.showModal();
+    loadRepo(b.dataset.explore);
+  }));
+}
 </script>
 </body>
 </html>
