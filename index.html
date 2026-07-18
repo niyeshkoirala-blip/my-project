@@ -114,8 +114,6 @@ section{padding:110px 0}
 section.current .sec-head{border-color:rgba(92,242,162,.45)}
 section.current .sec-head .num{text-shadow:0 0 14px var(--acc)}
 .sec-head h2{font-size:clamp(26px,4vw,38px);letter-spacing:.08em;font-weight:700;text-transform:uppercase}
-.sec-head .tail{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--dim);display:none}
-@media(min-width:700px){.sec-head .tail{display:block}}
 
 .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s,transform .7s}
 .reveal.in{opacity:1;transform:none}
@@ -330,7 +328,6 @@ footer a:hover{color:var(--acc)}
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="num">01</span><h2>Technical Skills</h2>
-      <span class="tail mono">// stack.json</span>
     </div>
     <div class="skill-grid reveal">
       <div class="skill-card"><h3>FRONTEND &amp; FRAMEWORKS</h3><div class="chips">
@@ -366,7 +363,6 @@ footer a:hover{color:var(--acc)}
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="num">02</span><h2>Projects</h2>
-      <span class="tail mono">// git log --oneline</span>
     </div>
     <div class="proj-list" id="projList">
       <div class="x-msg"><span><span class="spin"></span>loading projects…</span></div>
@@ -403,7 +399,6 @@ footer a:hover{color:var(--acc)}
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="num">03</span><h2>Education &amp; Contact</h2>
-      <span class="tail mono">// ping me</span>
     </div>
     <div class="edu reveal">
       <div>
