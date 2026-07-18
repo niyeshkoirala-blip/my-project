@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "node server.js"
+    "start": "node --env-file-if-exists=.env server.js"
   },
   "repository": {
     "type": "git",
