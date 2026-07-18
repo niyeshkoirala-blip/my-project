@@ -607,11 +607,16 @@ $('xClose').addEventListener('click',()=>dlg.close());
 dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()}); // backdrop click
 
 /* ---------- projects — built live from github + groq, see api/projects.mjs ---------- */
-// projects.json is a committed snapshot: served when the API is missing (static/local
-// serving) or failing (no GROQ_API_KEY yet), so the section never renders blank.
+// Every successful API fetch is cached in localStorage automatically; when the API
+// fails, that cache is used, then the committed projects.json snapshot, so the
+// section never renders blank.
 fetch('/api/projects')
   .then(r=>{if(!r.ok)throw new Error(r.status);return r.json()})
-  .catch(()=>fetch('projects.json').then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}))
+  .then(list=>{try{localStorage.setItem('projCache',JSON.stringify(list))}catch{}return list})
+  .catch(()=>{
+    try{const c=JSON.parse(localStorage.getItem('projCache'));if(c)return c}catch{}
+    return fetch('projects.json').then(r=>{if(!r.ok)throw new Error(r.status);return r.json()})
+  })
   .then(renderProjects)
   .catch(e=>{
     console.error('projects:',e);
