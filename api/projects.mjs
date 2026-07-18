@@ -7,7 +7,15 @@
 // The response is CDN-cached (see Cache-Control below), so the browser fetches this
 // on every page load but Groq only actually runs about once a day.
 
+import { readFileSync } from 'node:fs';
+
 const USER = 'niyeshkoirala-blip';
+
+// In-memory fallback: seeded from the committed projects.json snapshot at boot,
+// replaced by every successful build, served whenever a build fails — so the API
+// keeps answering even with no GROQ_API_KEY or GitHub/Groq outages.
+let lastGood = [];
+try { lastGood = JSON.parse(readFileSync(new URL('../projects.json', import.meta.url), 'utf8')) } catch {}
 const SKIP = new Set(['my-project']); // the portfolio itself
 const MODEL = 'llama-3.3-70b-versatile';
 
@@ -104,10 +112,10 @@ export async function syncSnapshot(projects) {
 }
 
 export default async function handler(req, res) {
-  const key = process.env.GROQ_API_KEY;
-  if (!key) return res.status(500).json({ error: 'GROQ_API_KEY is not set on the server' });
-
   try {
+    const key = process.env.GROQ_API_KEY;
+    if (!key) throw new Error('GROQ_API_KEY is not set on the server');
+
     const repos = (await gh(`/users/${USER}/repos?per_page=100&sort=pushed`))
       .filter(r => !r.fork && !r.archived && !SKIP.has(r.name));
 
@@ -132,7 +140,8 @@ export default async function handler(req, res) {
       }
     }))).filter(Boolean);
 
-    if (!projects.length) return res.status(502).json({ error: 'no projects could be built' });
+    if (!projects.length) throw new Error('no projects could be built');
+    lastGood = projects;
 
     // a snapshot failure must never take down the live response
     console.log('snapshot:', await syncSnapshot(projects).catch(e => e.message));
@@ -143,6 +152,11 @@ export default async function handler(req, res) {
     res.json(projects);
   } catch (e) {
     console.error(e);
+    if (lastGood.length) {
+      // short cache so the CDN retries the live build soon instead of pinning stale data
+      res.setHeader('Cache-Control', 's-maxage=300');
+      return res.json(lastGood);
+    }
     res.status(502).json({ error: e.message });
   }
 }
