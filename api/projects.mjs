@@ -142,6 +142,7 @@ export default async function handler(req, res) {
 
     if (!projects.length) throw new Error('no projects could be built');
     lastGood = projects;
+    console.log(`projects: live build from github+groq (${projects.length} repos)`);
 
     // a snapshot failure must never take down the live response
     console.log('snapshot:', await syncSnapshot(projects).catch(e => e.message));
@@ -153,6 +154,7 @@ export default async function handler(req, res) {
   } catch (e) {
     console.error(e);
     if (lastGood.length) {
+      console.log(`projects: live build failed, serving saved snapshot (${lastGood.length} repos)`);
       // short cache so the CDN retries the live build soon instead of pinning stale data
       res.setHeader('Cache-Control', 's-maxage=300');
       return res.json(lastGood);
